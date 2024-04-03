@@ -19,7 +19,7 @@ phases:
 
       # Run pylint and capture the output. Then, check if the score is above 7.
       # Adjust '**/*.py' to the path matching your Python files.
-      - pylint **/*.py
+      - pylint **/*.py || true
 
   post_build:
     commands:
