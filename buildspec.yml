@@ -1,0 +1,40 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8
+    commands:
+      - pip install cfn-lint pylint
+
+  pre_build:
+    commands:
+      # Optional: Install any dependencies your Python code may have, e.g.,
+      # - pip install -r requirements.txt
+
+  build:
+    commands:
+      # Run cfn-lint against CloudFormation templates
+      - cfn-lint template.yml
+
+      # Run pylint and capture the output. Then, check if the score is above 7.
+      # Adjust '**/*.py' to the path matching your Python files.
+      - |
+        PYLINT_SCORE=$(pylint **/*.py | tee /dev/tty | grep 'Your code has been rated at' | awk '{print $7}' | cut -d'/' -f1)
+        echo "Pylint score: $PYLINT_SCORE"
+        if (( $(echo "$PYLINT_SCORE > 7.0" | bc -l) )); then
+          echo "Pylint score is above 7. Passing the build."
+        else
+          echo "Pylint score is below or equal to 7. Failing the build."
+          exit 1
+        fi
+
+  post_build:
+    commands:
+      - echo "cfn-lint and pylint checks passed."
+
+artifacts:
+  files:
+    - '**/*'
+  # If your build outputs are located in a specific directory, specify it here
+  # base-directory: 'build/output'

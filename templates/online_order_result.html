@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Order Prediction Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script type="text/javascript">
+        function toggleFeatureImportance() {
+            var x = document.getElementById("featureImportanceChart");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Online Order Prediction Result</h2>
+        {% if prediction == 0 or prediction == 1 %}
+            <div class="result">
+                <h3>Should Enable Online Ordering: {{ 'Absolutely, Yes!' if prediction == 1 else 'Not Necessary Right Now' }}</h3>
+                <div class="advice">
+                    {% if prediction == 1 %}
+                        <p>Looks like it's a great idea to introduce online ordering! It seems your customers would really appreciate the convenience of ordering their favorite dishes with just a few clicks. Imagine reaching out to people who might be craving your food while lounging at home or working late in the office. This move isn't just about keeping up with the times; it's about expanding your reach and giving your sales a potential boost. Think about a user-friendly online platform, maybe a cool app, and don't forget to spread the word on social media and through your loyal customers!</p>
+                    {% else %}
+                        <p>For your restaurant, sticking to the traditional dine-in or phone-ordering might just be the way to go for now. Your patrons seem to enjoy the ambiance and the experience of dining at your place, or perhaps they're the kind who like a quick phone call to place their orders. It's all about what makes your customers happy and keeps your kitchen buzzing. Nevertheless, keep an eye on how trends evolve – the world's moving fast, and flexibility is key. In the meantime, how about sprucing up the dine-in experience even more or maybe hosting some exciting events?</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+        {% endif %}
+        <!-- Button to toggle the feature importance chart -->
+        <button onclick="toggleFeatureImportance()" class="home-button">Show/Hide Feature Importance Chart</button>
+
+        <!-- Feature Importance Chart (initially hidden) -->
+        <div id="featureImportanceChart" style="display:none;">
+            <img src="{{ url_for('static', filename='feature_importance.png') }}" alt="Feature Importance Chart">
+        </div>
+        <a href="/" class="home-button">Home</a>
+    </div>
+</body>
+
+</html>

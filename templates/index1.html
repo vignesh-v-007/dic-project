@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zomato Restaurant Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+        }
+        label {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            display: block;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        .submit-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 20px;
+        }
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+        .home-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .home-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Zomato Restaurant Rating and Online Order Predictor</h2>
+    <form action="/predict" method="post">
+        <label for="name">Restaurant Name:</label><br>
+        <input type="text" id="name" name="name"><br>
+
+        <label for="book_table">Book Table:</label><br>
+        <select id="book_table" name="book_table">
+            <option value="True">Yes</option>
+            <option value="False">No</option>
+        </select><br>
+
+        <label for="location">Location:</label><br>
+        <select id="location" name="location">
+            <!-- Locations -->
+            <option value="Banashankari">Banashankari</option>
+            <option value="Basavanagudi">Basavanagudi</option>
+            <!-- ... other options ... -->
+            <option value="New BEL Road">New BEL Road</option>
+            <option value="others">Others</option>
+        </select><br>
+
+        <label for="rest_type">Restaurant Type:</label><br>
+        <select id="rest_type" name="rest_type">
+            <!-- Restaurant Types -->
+            <option value="Casual Dining">Casual Dining</option>
+            <option value="Cafe, Casual Dining">Cafe, Casual Dining</option>
+            <!-- ... other options ... -->
+            <option value="Dessert Parlor, Cafe">Dessert Parlor, Cafe</option>
+            <option value="others">Others</option>
+        </select><br>
+
+        <label for="cuisines">Cuisines:</label><br>
+        <select id="cuisines" name="cuisines">
+            <!-- Cuisines -->
+            <option value="others">Others</option>
+            <option value="South Indian, North Indian">South Indian, North Indian</option>
+            <!-- ... other options ... -->
+            <option value="Desserts, Bakery">Desserts, Bakery</option>
+            <option value="Kerala">Kerala</option>
+        </select><br>
+
+        <label for="cost">Average Cost (for two):</label><br>
+        <input type="number" id="cost" name="cost"><br>
+
+        <label for="type">Type:</label><br>
+        <select id="type" name="type">
+            <!-- Types -->
+            <option value="Buffet">Buffet</option>
+            <option value="Cafes">Cafes</option>
+            <!-- ... other options ... -->
+            <option value="Pubs and bars">Pubs and bars</option>
+        </select><br>
+
+        <label for="city">City:</label><br>
+        <select id="city" name="city">
+            <!-- Cities -->
+            <option value="Banashankari">Banashankari</option>
+            <option value="Bannerghatta Road">Bannerghatta Road</option>
+            <!-- ... other options ... -->
+            <option value="Sarjapur Road">Sarjapur Road</option>
+            <option value="Whitefield">Whitefield</option>
+        </select><br>
+
+        <label for="book_table">Book Table (0 for No, 1 for Yes):</label><br>
+        <input type="number" id="book_table" name="book_table"><br>
+
+        <label for="votes">Votes:</label><br>
+        <input type="number" id="votes" name="votes"><br>
+
+        <label for="no_of_items">Number of Items:</label><br>
+        <input type="number" id="no_of_items" name="no_of_items"><br>
+
+        <input type="submit" value="Predict">
+
+    </form>
+    {% if prediction %}
+        <h3>Prediction Result:</h3>
+        <p>{{ prediction }}</p>
+    {% endif %}
+</body>
+</html>

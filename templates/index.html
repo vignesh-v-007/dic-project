@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Adjust viewport for desktop -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Page Title</title>
+    <!-- Add your CSS link here if external, or continue with internal styling -->
+    <title>Zomato Prediction Selection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Prediction Service for Restaurants</h2>
+        <form action="/select_prediction" method="post">
+            <input type="radio" id="rating" name="prediction_choice" value="rating">
+            <label for="rating">Predict Restaurant Rating</label>
+
+            <input type="radio" id="online_order" name="prediction_choice" value="online_order">
+            <label for="online_order">Predict If Online Orders Should Be Enabled</label>
+
+            <input type="submit" value="Next" class="submit-button">
+
+            <!-- Home Button -->
+            <a href="/" class="home-button">Home</a>
+        </form>
+    </div>
+</body>
+</html>

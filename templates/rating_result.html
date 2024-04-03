@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rating and Success Prediction Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script type="text/javascript">
+        function toggleFeatureImportance() {
+            var x = document.getElementById("featureImportanceChart");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Prediction Results</h2>
+
+        {% if prediction %}
+            <div class="result">
+                <h3>Restaurant Rating: {{ prediction }}</h3>
+                <div class="advice">
+                    <!-- Detailed summary based on predicted rating -->
+                    {% if prediction|float < 2.0 %}
+                        <p>Looks like things are a bit tough, with a rating under 2.0. This could be a wake-up call to reevaluate what's not clicking. Maybe it's time to shake things up a bit - from revisiting your recipes to sprucing up the ambiance. Remember, every great restaurant has room to grow and evolve. It's all about learning and adapting.</p>
+                    {% elif prediction|float < 3.0 %}
+                        <p>With a rating between 2.0 and 3.0, you're doing some things right but there's definitely room for improvement. It might be about tweaking your menu, enhancing customer service, or even some marketing magic. It's about finding those little changes that can turn average experiences into memorable ones.</p>
+                    {% elif prediction|float < 3.5 %}
+                        <p>A rating between 3.0 and 3.5 is decent, but why settle for just decent, right? Perhaps it's time to look at what makes your regulars come back and see how you can replicate that magic more consistently. Small steps can lead to big leaps in customer satisfaction.</p>
+                    {% elif prediction|float < 4.0 %}
+                        <p>Nice! With a rating hovering between 3.5 and 4.0, you're on the right track. This shows you're making many customers happy, but there's always that extra mile you can go. Maybe some innovative dishes or a few surprise elements in your service can turn those smiles into wows.</p>
+                    {% elif prediction|float < 4.5 %}
+                        <p>You're shining with a rating between 4.0 and 4.5! This means a lot of people love what you're doing. Keep up the great work but don't get complacent. Stay creative, keep engaging with your customers, and always aim for that perfect score.</p>
+                    {% else %}
+                        <p>Outstanding! A rating above 4.5 is no small feat. You've earned a stellar reputation, and it's important to uphold these high standards. Continue delighting your customers, and don't be afraid to innovate and set new trends in the culinary world.</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+
+            <div class="result">
+                <!-- Success Rate Calculation -->
+                {% set votes_weightage = 1 if votes_value > 1000 else votes_value / 1000 %}
+                {% set rating_weightage = prediction|float %}
+                {% set online_weightage = 1 if online_order_value == 1 else 0 %}
+                {% set booking_weightage = 1 if book_table_value == 1 else 0 %}
+                {% set cost_weightage = 1 if cost_value < 200 else (0 if cost_value > 6000 else 1 - (cost_value / 6000)) %}
+                {% set items_weightage = 1 if no_of_items_value > 50 else no_of_items_value / 50 %}
+
+                {% set success_rate = rating_weightage + votes_weightage + online_weightage + booking_weightage + cost_weightage + items_weightage %}
+
+
+                <h3>Success Rate: {{ success_rate|round(2) }}</h3>
+                <!-- You can add more detailed summaries based on the score here -->
+                <div class="advice">
+                    <!-- Detailed summary based on success rate -->
+                    <p><strong>Book Table:</strong> 
+                        {% if book_table_value == 1 %}
+                            Seems like your restaurant is all set for guests who love to plan ahead. This foresight really helps in managing your crowd, especially on busy nights or for special events. It's a win-win for you and your guests!
+                        {% else %}
+                            Missing out on reservations? It's quite a charm for many guests to know they've got a spot waiting. Maybe it's time to consider an online booking system – a small step that could make a big difference in customer convenience.
+                        {% endif %}
+                    </p>
+                    <br>
+                    <p><strong>Online Orders:</strong> 
+                        {% if online_order_value == 1 %}
+                            Embracing the online world, are we? That's the spirit! This move surely widens your customer base, letting people enjoy your delicious offerings right from the comfort of their homes.
+                        {% else %}
+                            Still contemplating online orders? Remember, it’s a digital age! This could be your golden ticket to reach more food lovers. Maybe start with a few popular items and see how it goes?
+                        {% endif %}
+                    </p>
+                    <br>
+                    <p><strong>Cost:</strong> 
+                        {% if cost_weightage < 0.5 %}
+                            Running on the higher end of pricing? It's a delicate balance. Just ensure your guests feel the value in every bite, and they won't mind the extra pennies.
+                        {% else %}
+                            Your pricing sounds like a magnet for a wide array of food enthusiasts. Keep it up, and make sure your quality always hits the mark – that’s the key to keeping those seats filled.
+                        {% endif %}
+                    </p>
+                    <br>
+                    <p><strong>Votes:</strong> 
+                        {% if votes_weightage > 0.5 %}
+                            Cheers to being a crowd favorite! Your high vote count speaks volumes about your restaurant's popularity. Keep the momentum going and maybe throw in a surprise dish or event to keep things exciting.
+                        {% else %}
+                            Feeling a bit under the radar? Let's spice up the engagement. Maybe it's time for a dazzling new dish, a social media buzz, or an event that gets everyone talking.
+                        {% endif %}
+                    </p>
+                    <br>
+                    <p><strong>Number of Items:</strong> 
+                        {% if items_weightage > 0.5 %}
+                            A menu that's like a treasure trove – how exciting! Just ensure each dish is as amazing as the next. Quality is the star, no matter how extensive the menu.
+                        {% else %}
+                            Got a concise menu? That's cool, as long as it's packed with star dishes. But hey, adding a couple of new flavors might just be the twist your menu needs.
+                        {% endif %}
+                    </p>
+                    <br><br>
+                    {% if success_rate < 3.0 %}
+                        <p>It seems like there's a bit of a struggle, with a score under 3.0. But hey, every great restaurant has its ups and downs. It’s all about striking the right chord with your service, menu, and customer engagement. Time for some brainstorming and maybe a bit of a revamp?</p>
+                    {% elif success_rate < 5.0 %}
+                        <p>With a score between 3.0 and 5.0, you're making some waves, but there's more sea to conquer. How about some customer feedback sessions or trying out new marketing strategies? Small steps can make a big splash.</p>
+                    {% elif success_rate < 7.0 %}
+                        <p>Doing pretty well there, with a score between 5.0 and 7.0! But there's always room to aim higher. Perhaps exploring new culinary trends or enhancing the ambiance could be your next big move.</p>
+                    {% elif success_rate < 9.0 %}
+                        <p>A score between 7.0 and 9.0? That's impressive! You're clearly making a mark. Keep up the good work and maybe throw in a little extra – a special chef’s special, perhaps? Keep the surprises coming!</p>
+                    {% else %}
+                        <p>Wow, above 9.0? You're acing it! Your restaurant seems to be the talk of the town. Continue to dazzle your customers with your culinary magic, and maybe it’s time to start thinking about what's next on the horizon!</p>
+                    {% endif %}
+                </div>
+                
+            </div>
+        {% endif %}
+        <!-- Button to toggle the feature importance chart -->
+        <button onclick="toggleFeatureImportance()" class="home-button">Show/Hide Feature Importance Chart</button>
+
+        <!-- Feature Importance Chart (initially hidden) -->
+        <div id="featureImportanceChart" style="display:none;">
+            <img src="{{ url_for('static', filename='feature_importance.png') }}" alt="Feature Importance Chart">
+        </div>
+        <!-- Home Button -->
+        <a href="/" class="home-button">Home</a>
+    </div>
+</body>
+</html>
