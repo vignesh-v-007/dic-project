@@ -5,8 +5,6 @@ phases:
     runtime-versions:
       python: 3.8
     commands:
-      - echo "Running commands using bash"
-      - yum install -y bc
       - pip install cfn-lint pylint
 
   pre_build:
@@ -21,17 +19,7 @@ phases:
 
       # Run pylint and capture the output. Then, check if the score is above 7.
       # Adjust '**/*.py' to the path matching your Python files.
-      - |
-        PYLINT_SCORE=$(pylint **/*.py | grep 'Your code has been rated at' | awk '{print $7}' | cut -d'/' -f1)
-        echo "Pylint score: $PYLINT_SCORE"
-        MIN_SCORE=4.0
-        COMPARE=$(echo "$PYLINT_SCORE >= $MIN_SCORE" | bc)
-        if [ "$COMPARE" -eq 1 ]; then
-          echo "Pylint score is $PYLINT_SCORE which is above or equal to $MIN_SCORE. Passing the build."
-        else
-          echo "Pylint score is $PYLINT_SCORE which is below $MIN_SCORE. Failing the build."
-          exit 1
-        fi
+      - pylint **/*.py
 
   post_build:
     commands:
