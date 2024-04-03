@@ -323,10 +323,11 @@ Resources:
                 - Name: BuildOutput
               Configuration:
                 ActionMode: CREATE_UPDATE
-                StackName: MyApplicationStack
-                Capabilities: CAPABILITY_NAMED_IAM
-                TemplatePath: BuildOutput::YourCloudFormationTemplateName.yaml # Update the file name
-                TemplateConfiguration: BuildOutput::YourCloudFormationConfigFileName.json # Optional configuration file
+                StackName: !Sub "${AWS::StackName}-deployment"
+                Capabilities: CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
+                TemplatePath: BuildOutput::template.yml
+                TemplateConfiguration: BuildOutput::templateparameters.json
+                RoleArn: !GetAtt CloudFormationExecutionRole.Arn
               RunOrder: 1
 
         - Name: Deploy-Application
