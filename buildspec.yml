@@ -5,9 +5,9 @@ phases:
     runtime-versions:
       python: 3.8
     commands:
+      - echo "Running commands using bash"
+      - yum install -y bc
       - pip install cfn-lint pylint
-      - yum update -y
-      - yum install bc -y
 
   pre_build:
     commands:
