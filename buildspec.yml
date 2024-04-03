@@ -6,6 +6,8 @@ phases:
       python: 3.8
     commands:
       - pip install cfn-lint pylint
+      - yum update -y
+      - yum install bc -y
 
   pre_build:
     commands:
@@ -23,15 +25,8 @@ phases:
         PYLINT_SCORE=$(pylint **/*.py | grep 'Your code has been rated at' | awk '{print $7}' | cut -d'/' -f1)
         echo "Pylint score: $PYLINT_SCORE"
         MIN_SCORE=4.0
-
-        # Bash does not support floating-point arithmetic in conditional expressions directly,
-        # so we need to use another tool like awk for the comparison, or perform a workaround.
-        # Since we already know the score is 4.81, we can perform string comparison for this particular case
-        # as it's reliable when comparing numbers with two decimal places.
-        PYLINT_SCORE_INT=${PYLINT_SCORE/./}  # Convert 4.81 to 481
-        MIN_SCORE_INT=${MIN_SCORE/./}        # Convert 4.0 to 40 (or 400 to compare correctly)
-
-        if [ "$PYLINT_SCORE_INT" -ge "$MIN_SCORE_INT" ]; then
+        COMPARE=$(echo "$PYLINT_SCORE >= $MIN_SCORE" | bc)
+        if [ "$COMPARE" -eq 1 ]; then
           echo "Pylint score is $PYLINT_SCORE which is above or equal to $MIN_SCORE. Passing the build."
         else
           echo "Pylint score is $PYLINT_SCORE which is below $MIN_SCORE. Failing the build."
