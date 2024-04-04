@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Copy artifacts from CodeBuild and the required files from S3 to the /home/ec2-user directory
+aws s3 cp s3://vigneshproject01files/online_order_model.pkl /home/ec2-user/
+aws s3 cp s3://vigneshproject01files/rating_model.pkl /home/ec2-user/
+aws s3 cp s3://vigneshproject01files/zomato.csv /home/ec2-user/
+
+# Navigate to home directory
+cd /home/ec2-user
+
 # Update and install dependencies
 sudo yum update -y
 sudo yum install python3 python3-pip httpd -y
@@ -7,10 +15,6 @@ sudo yum install python3 python3-pip httpd -y
 # Start Apache web server
 sudo systemctl start httpd
 sudo systemctl enable httpd
-
-# Unzip the project
-unzip project.zip
-cd project
 
 # Install Python dependencies
 pip3 install flask numpy pandas matplotlib scikit-learn
