@@ -67,7 +67,7 @@ Resources:
     Type: 'AWS::EC2::Instance'
     Properties:
       IamInstanceProfile: !Ref EC2InstanceProfile
-      InstanceType: t2.micro
+      InstanceType: t2.medium
       SecurityGroups:
         - !Ref MySecurityGroup
       ImageId: !Ref LatestAmiId
