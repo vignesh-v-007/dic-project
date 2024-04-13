@@ -1,5 +1,3 @@
 # dic-project
-DIC project Zomato dataset
-Shiva Sai
-Vignesh
-Nitindha
+DIC project using Zomato dataset
+Vignesh Venkatakumar
