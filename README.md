@@ -33,6 +33,28 @@
 10. **Final Testing and Launch:**
  - Performed final testing to ensure the web application’s functionality and reliability.
  - Launched the web application to be accessible for end-users to input data and receive predictions on restaurant ratings and online order feasibility.
+
+```mermaid
+graph LR
+    User[User] -->|Access| ELB[Load Balancer]
+    ELB --> EC2_1[EC2 Instance 1]
+    ELB --> EC2_2[EC2 Instance 2]
+    EC2_1 --> RDS[RDS MySQL Database]
+    EC2_2 --> RDS
+    EC2_1 --> S3[(S3 Bucket)]
+    EC2_2 --> S3
+    EC2_1 --> CloudWatch
+    EC2_2 --> CloudWatch[CloudWatch Logs]
+    GitHub[GitHub Repository] -->|CI/CD Pipeline| CodePipeline[CodePipeline]
+    CodePipeline -->|Deploy| CodeDeploy[CodeDeploy]
+    CodeDeploy --> EC2_1
+    CodeDeploy --> EC2_2
+
+    classDef default fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef database fill:#ccf,stroke:#333,stroke-width:2px;
+    class ELB,CodePipeline,CodeDeploy default
+    class RDS,S3 database
+
 =======
 # dic-project
 DIC project using Zomato dataset
