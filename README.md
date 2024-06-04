@@ -1,7 +1,60 @@
-<<<<<<< HEAD
-# Zomato-project
-## In this Zomato project, our goal was to predict restaurant ratings and determine if online orders should be enabled, utilizing a dataset containing details like restaurant name, location, and more. We chose the Extra Trees and Random Forest algorithms for their effectiveness in handling our prediction tasks, based on their superior performance in phase 2 of the project. These models were adept at managing complex datasets with numerous features affecting ratings and operational decisions, making them ideal for providing actionable insights into restaurant operations. This choice was driven by the need for robust prediction capabilities to aid restaurant owners in enhancing customer satisfaction and operational efficiency.
+# Zomato Restaurant Rating and Online Order Feasibility Prediction
 
+## Project Overview
+This project aims to predict restaurant ratings and assess the feasibility of enabling online orders using machine learning models based on the Zomato dataset. The application is deployed on AWS and utilizes Flask for the web interface.
+
+## Repository Structure
+
+```plaintext
+/
+|-- deploy_scripts/       # Scripts for deployment
+|-- static/               # Static files for web application
+|-- templates/            # HTML templates for the Flask application
+|-- DIC-Phase3.mp4        # Video description of phase 3
+|-- Phase 3 - Description(4).pdf  # Detailed documentation of phase 3
+|-- README.md             # Project documentation
+|-- app.py                # Flask application main file
+|-- appspec.yml           # AWS CodeDeploy specification file
+|-- buildspec.yml         # AWS CodeBuild specification file
+|-- dic_project_phase2.ipynb  # Jupyter notebook for phase 2 analysis
+|-- feature_importance.png # Feature importance visualization
+|-- graph.py              # Script for generating graphs
+|-- pipeline.yml          # CloudFormation template for CI/CD pipeline
+|-- requirements.txt      # Python dependencies
+|-- sample.py             # Sample Python script
+|-- template.yml          # AWS CloudFormation template for infrastructure
+|-- templateparameters.json # Parameters for CloudFormation template
+```
+
+## Key Files and Their Functions
+- **app.py**: Flask application's main script.
+- **appspec.yml**: Specifies the AWS CodeDeploy settings for deployment.
+- **buildspec.yml**: Contains commands used by AWS CodeBuild for the build process.
+- **pipeline.yml**: Defines the AWS CloudFormation resources for the CI/CD pipeline.
+
+## Deployment Instructions
+### Initial Setup
+1. Clone the repository to your local machine.
+2. Install the required Python packages: `pip install -r requirements.txt`.
+
+### Running Locally
+1. Execute `python app.py` to start the Flask server.
+2. Access the application through `localhost` on the specified port.
+
+### AWS Deployment
+1. Commit and push any changes to the GitHub repository to trigger AWS CodePipeline.
+2. AWS CodeBuild and CodeDeploy will automatically deploy updates to AWS EC2 instances.
+3. Monitor deployment status through AWS CodeDeploy and AWS CloudWatch.
+
+## Deployment Using AWS CloudFormation
+1. Navigate to the AWS CloudFormation console.
+2. Create a new stack using `template.yml` and provide parameters from `templateparameters.json`.
+3. Review and launch the stack.
+
+## Continuous Integration and Deployment
+- GitHub commits trigger AWS CodePipeline.
+- AWS CodeBuild builds the application and runs tests.
+- AWS CodeDeploy automatically deploys the application to configured AWS EC2 instances.
 
 #### Here's a brief explanation of the steps followed in the Zomato project:
 
@@ -33,30 +86,3 @@
 10. **Final Testing and Launch:**
  - Performed final testing to ensure the web application’s functionality and reliability.
  - Launched the web application to be accessible for end-users to input data and receive predictions on restaurant ratings and online order feasibility.
-
-```mermaid
-graph LR
-    User[User] -->|Access| ELB[Load Balancer]
-    ELB --> EC2_1[EC2 Instance 1]
-    ELB --> EC2_2[EC2 Instance 2]
-    EC2_1 --> RDS[RDS MySQL Database]
-    EC2_2 --> RDS
-    EC2_1 --> S3[(S3 Bucket)]
-    EC2_2 --> S3
-    EC2_1 --> CloudWatch
-    EC2_2 --> CloudWatch[CloudWatch Logs]
-    GitHub[GitHub Repository] -->|CI/CD Pipeline| CodePipeline[CodePipeline]
-    CodePipeline -->|Deploy| CodeDeploy[CodeDeploy]
-    CodeDeploy --> EC2_1
-    CodeDeploy --> EC2_2
-
-    classDef default fill:#f9f,stroke:#333,stroke-width:2px;
-    classDef database fill:#ccf,stroke:#333,stroke-width:2px;
-    class ELB,CodePipeline,CodeDeploy default
-    class RDS,S3 database
-
-=======
-# dic-project
-DIC project using Zomato dataset
-Vignesh Venkatakumar
->>>>>>> dbf49a38bae1e3f7b49d8c3d58e152f487431944
