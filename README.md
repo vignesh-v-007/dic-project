@@ -4,24 +4,27 @@
 This project aims to predict restaurant ratings and assess the feasibility of enabling online orders using machine learning models based on the Zomato dataset. The application is deployed on AWS and utilizes Flask for the web interface.
 
 ## Repository Structure
+
+```plaintext
 /
-|-- deploy_scripts/ # Scripts for deployment
-|-- static/ # Static files for web application
-|-- templates/ # HTML templates for the Flask application
-|-- DIC-Phase3.mp4 # Video description of phase 3
-|-- Phase 3 - Description(4).pdf # Detailed documentation of phase 3
-|-- README.md # Project documentation
-|-- app.py # Flask application main file
-|-- appspec.yml # AWS CodeDeploy specification file
-|-- buildspec.yml # AWS CodeBuild specification file
-|-- dic_project_phase2.ipynb # Jupyter notebook for phase 2 analysis
+|-- deploy_scripts/       # Scripts for deployment
+|-- static/               # Static files for web application
+|-- templates/            # HTML templates for the Flask application
+|-- DIC-Phase3.mp4        # Video description of phase 3
+|-- Phase 3 - Description(4).pdf  # Detailed documentation of phase 3
+|-- README.md             # Project documentation
+|-- app.py                # Flask application main file
+|-- appspec.yml           # AWS CodeDeploy specification file
+|-- buildspec.yml         # AWS CodeBuild specification file
+|-- dic_project_phase2.ipynb  # Jupyter notebook for phase 2 analysis
 |-- feature_importance.png # Feature importance visualization
-|-- graph.py # Script for generating graphs
-|-- pipeline.yml # CloudFormation template for CI/CD pipeline
-|-- requirements.txt # Python dependencies
-|-- sample.py # Sample Python script
-|-- template.yml # AWS CloudFormation template for infrastructure
+|-- graph.py              # Script for generating graphs
+|-- pipeline.yml          # CloudFormation template for CI/CD pipeline
+|-- requirements.txt      # Python dependencies
+|-- sample.py             # Sample Python script
+|-- template.yml          # AWS CloudFormation template for infrastructure
 |-- templateparameters.json # Parameters for CloudFormation template
+
 
 ## Key Files and Their Functions
 - **app.py**: Flask application's main script.
