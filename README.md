@@ -24,7 +24,7 @@ This project aims to predict restaurant ratings and assess the feasibility of en
 |-- sample.py             # Sample Python script
 |-- template.yml          # AWS CloudFormation template for infrastructure
 |-- templateparameters.json # Parameters for CloudFormation template
-
+```
 
 ## Key Files and Their Functions
 - **app.py**: Flask application's main script.
